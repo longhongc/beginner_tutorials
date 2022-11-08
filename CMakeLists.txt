@@ -13,6 +13,14 @@ find_package(ament_cmake REQUIRED)
 
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "srv/GetLoggerLevel.srv"
+  "srv/SetLoggerLevel.srv"
+)
+
+ament_export_dependencies(rosidl_default_runtime)
 
 add_executable(talker src/pub.cpp)
 ament_target_dependencies(talker rclcpp std_msgs)
