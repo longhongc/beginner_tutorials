@@ -15,10 +15,17 @@ using namespace std::chrono_literals;
 using namespace std::placeholders;
 using GetCount = beginner_tutorials::srv::GetCount;
 
+/**
+ * @Brief  A publisher node
+ */
 class MinimalPublisher : public rclcpp::Node {
  public:
-    MinimalPublisher()
+   /**
+    * @Brief The constructor
+    */
+    MinimalPublisher() 
     : Node("minimal_publisher"), count_(0) {
+      // Set default logger level to DEBUG
       if (rcutils_logging_set_logger_level(this->get_logger().get_name(),
                       RCUTILS_LOG_SEVERITY::RCUTILS_LOG_SEVERITY_DEBUG)
           == RCUTILS_RET_OK) {
@@ -27,6 +34,7 @@ class MinimalPublisher : public rclcpp::Node {
           RCLCPP_ERROR_STREAM(this->get_logger(), "Set logger level DEBUG fails.");
       }
 
+      // Set ros parameter "count"
       auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
       param_desc.description =
         "\nThis parameter is the count value passed between the minimal publisher and the minimal subscriber."
@@ -38,10 +46,12 @@ class MinimalPublisher : public rclcpp::Node {
       RCLCPP_INFO_STREAM(this->get_logger(), "Count starts from " << count_);
 
 
+      // Create a publisher for count
       publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
       timer_ = this->create_wall_timer(
           1s, std::bind(&MinimalPublisher::timer_callback, this));
 
+      // Create a service for modifying count
       std::string get_count_service_name = "/" + std::string(this->get_name()) + "/" + "GetCount";
       get_count_service_ = this->create_service<GetCount>(
           get_count_service_name,
@@ -49,19 +59,37 @@ class MinimalPublisher : public rclcpp::Node {
     }
 
  private:
+    /**
+     * @Brief The callback function that will be called and publish message
+     *        for a given frequency
+     */
     void timer_callback() {
       auto message = std_msgs::msg::String();
+      // Receive the count parameter
       count_ = this->get_parameter("count").get_parameter_value().get<int>();
 
       message.data = std::to_string(count_);
 
+      // Determine which level of logger to use
       this->logger(message);
       publisher_->publish(message);
 
       count_++;
+      // Set the count param with the new count
       this->set_parameter(rclcpp::Parameter("count", count_));
     }
 
+    /**
+     * @Brief This function uses different logger level based on 
+     *        the remainder of the count divided by 5.
+     *        0) DEBUG
+     *        1) INFO
+     *        2) WARN
+     *        3) ERROR
+     *        4) FATAL
+     *
+     * @Param msg The count message in string
+     */
     void logger(std_msgs::msg::String& msg) {
       int count = stoi(msg.data);
       switch(count % 5) {
@@ -92,14 +120,30 @@ class MinimalPublisher : public rclcpp::Node {
       return;
     }
 
+    /**
+     * @Brief The callback function for the service server 
+     *        that returns the current count value
+     *
+     * @Param request None
+     * @Param response Return the count value
+     */
     void get_count_callback(const std::shared_ptr<GetCount::Request> request,
                                   std::shared_ptr<GetCount::Response> response) {
       (void) request; 
       response->count = count_;
     }
 
+    /**
+     * @Brief  Timer for periodically publishing message
+     */
     rclcpp::TimerBase::SharedPtr timer_;
+    /**
+     * @Brief  Publisher
+     */
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
+    /**
+     * @Brief Service Server for getting count
+     */
     rclcpp::Service<GetCount>::SharedPtr get_count_service_;
     int count_;
 };

@@ -6,10 +6,17 @@
 #include "std_msgs/msg/string.hpp"
 using std::placeholders::_1;
 
+/**
+ * @Brief A subscriber node 
+ */
 class MinimalSubscriber : public rclcpp::Node {
  public:
+    /**
+    * @Brief The constructor
+    */
     MinimalSubscriber()
     : Node("minimal_subscriber") {
+      // Set default logger level to DEBUG
       if (rcutils_logging_set_logger_level(this->get_logger().get_name(),
                       RCUTILS_LOG_SEVERITY::RCUTILS_LOG_SEVERITY_DEBUG)
           == RCUTILS_RET_OK) {
@@ -17,14 +24,34 @@ class MinimalSubscriber : public rclcpp::Node {
       } else {
           RCLCPP_ERROR_STREAM(this->get_logger(), "Set logger level DEBUG fails.");
       }
+
+      // Create a subscriber for count
       subscription_ = this->create_subscription<std_msgs::msg::String>(
       "topic", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
     }
 
  private:
+    /**
+     * @Brief The callback function for the count subscriber 
+     *
+     * @Param msg
+     */
     void topic_callback(const std_msgs::msg::String & msg) const {
+      // Determine which level of logger to use
       this->logger(msg);
     }
+
+    /**
+     * @Brief This function uses different logger level based on 
+     *        the remainder of the count divided by 5.
+     *        0) DEBUG
+     *        1) INFO
+     *        2) WARN
+     *        3) ERROR
+     *        4) FATAL
+     *
+     * @Param msg The count message in string
+     */
 
     void logger(const std_msgs::msg::String& msg) const {
       int count = stoi(msg.data);
@@ -56,6 +83,9 @@ class MinimalSubscriber : public rclcpp::Node {
       }
     }
 
+    /**
+     * @Brief Subscriber 
+     */
     rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
 };
 
