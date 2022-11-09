@@ -2,6 +2,13 @@
 This repository contains following practices for ROS2
 - [**Publisher subscriber**](#publisher-and-subscriber)  
 
+## Dependencies
+- ROS2 
+
+### Testing Environment
+- Ubuntu 20.04
+- ROS2 Humble
+
 ## Install
 Clone the repository to your ros2 workspace src folder
 ```
