@@ -16,8 +16,8 @@ find_package(std_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "srv/GetLoggerLevel.srv"
-  "srv/SetLoggerLevel.srv"
+  "srv/GetCount.srv"
+  "srv/SetCount.srv"
 )
 
 ament_export_dependencies(rosidl_default_runtime)
@@ -32,6 +32,10 @@ install(TARGETS
   talker
   listener
   DESTINATION lib/${PROJECT_NAME})
+
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME})
 
 
 if(BUILD_TESTING)
