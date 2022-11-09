@@ -3,13 +3,17 @@
 #include <chrono>
 #include <functional>
 #include <memory>
-#include <rcl_interfaces/msg/detail/parameter_descriptor__struct.hpp>
 #include <string>
 
+#include <rcl_interfaces/msg/detail/parameter_descriptor__struct.hpp>
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
+#include "beginner_tutorials/srv/get_count.hpp"
+
 using namespace std::chrono_literals;
+using namespace std::placeholders;
+using GetCount = beginner_tutorials::srv::GetCount;
 
 class MinimalPublisher : public rclcpp::Node {
  public:
@@ -37,7 +41,13 @@ class MinimalPublisher : public rclcpp::Node {
       publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
       timer_ = this->create_wall_timer(
           1s, std::bind(&MinimalPublisher::timer_callback, this));
+
+      std::string get_count_service_name = "/" + std::string(this->get_name()) + "/" + "GetCount";
+      get_count_service_ = this->create_service<GetCount>(
+          get_count_service_name,
+          std::bind(&MinimalPublisher::get_count_callback, this, _1, _2));
     }
+
  private:
     void timer_callback() {
       auto message = std_msgs::msg::String();
@@ -82,8 +92,15 @@ class MinimalPublisher : public rclcpp::Node {
       return;
     }
 
+    void get_count_callback(const std::shared_ptr<GetCount::Request> request,
+                                  std::shared_ptr<GetCount::Response> response) {
+      (void) request; 
+      response->count = count_;
+    }
+
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
+    rclcpp::Service<GetCount>::SharedPtr get_count_service_;
     int count_;
 };
 

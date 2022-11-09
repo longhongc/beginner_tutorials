@@ -28,6 +28,11 @@ ament_target_dependencies(talker rclcpp std_msgs)
 add_executable(listener src/sub.cpp)
 ament_target_dependencies(listener rclcpp std_msgs)
 
+rosidl_get_typesupport_target(cpp_typesupport_target
+  ${PROJECT_NAME} "rosidl_typesupport_cpp")
+
+target_link_libraries(talker "${cpp_typesupport_target}")
+
 install(TARGETS 
   talker
   listener
@@ -36,7 +41,6 @@ install(TARGETS
 install(
   DIRECTORY launch
   DESTINATION share/${PROJECT_NAME})
-
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
