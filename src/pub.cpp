@@ -23,21 +23,25 @@ class MinimalPublisher : public rclcpp::Node {
    /**
     * @Brief The constructor
     */
-    MinimalPublisher() 
+    MinimalPublisher()
     : Node("minimal_publisher"), count_(0) {
       // Set default logger level to DEBUG
       if (rcutils_logging_set_logger_level(this->get_logger().get_name(),
                       RCUTILS_LOG_SEVERITY::RCUTILS_LOG_SEVERITY_DEBUG)
           == RCUTILS_RET_OK) {
-          RCLCPP_INFO_STREAM(this->get_logger(), "Set logger level DEBUG success.");
+          RCLCPP_INFO_STREAM(this->get_logger(),
+                             "Set logger level DEBUG success.");
       } else {
-          RCLCPP_ERROR_STREAM(this->get_logger(), "Set logger level DEBUG fails.");
+          RCLCPP_ERROR_STREAM(this->get_logger(),
+                              "Set logger level DEBUG fails.");
       }
 
       // Set ros parameter "count"
-      auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
+      auto param_desc =
+           rcl_interfaces::msg::ParameterDescriptor{};
       param_desc.description =
-        "\nThis parameter is the count value passed between the minimal publisher and the minimal subscriber."
+        "\nThis parameter is the count value passed between "
+        "the minimal publisher and the minimal subscriber."
         "\n\n It also determines the logger level of both nodes.";
 
       this->declare_parameter("count", count_, param_desc);
@@ -52,7 +56,8 @@ class MinimalPublisher : public rclcpp::Node {
           1s, std::bind(&MinimalPublisher::timer_callback, this));
 
       // Create a service for modifying count
-      std::string get_count_service_name = "/" + std::string(this->get_name()) + "/" + "GetCount";
+      std::string get_count_service_name =
+                  "/" + std::string(this->get_name()) + "/" + "GetCount";
       get_count_service_ = this->create_service<GetCount>(
           get_count_service_name,
           std::bind(&MinimalPublisher::get_count_callback, this, _1, _2));
@@ -80,7 +85,7 @@ class MinimalPublisher : public rclcpp::Node {
     }
 
     /**
-     * @Brief This function uses different logger level based on 
+     * @Brief This function uses different logger level based on
      *        the remainder of the count divided by 5.
      *        0) DEBUG
      *        1) INFO
@@ -90,9 +95,9 @@ class MinimalPublisher : public rclcpp::Node {
      *
      * @Param msg The count message in string
      */
-    void logger(std_msgs::msg::String& msg) {
+    void logger(const std_msgs::msg::String& msg) {
       int count = stoi(msg.data);
-      switch(count % 5) {
+      switch (count % 5) {
         case 0:
           RCLCPP_DEBUG_STREAM(this->get_logger(),
             "Count: " << msg.data);
@@ -121,15 +126,15 @@ class MinimalPublisher : public rclcpp::Node {
     }
 
     /**
-     * @Brief The callback function for the service server 
+     * @Brief The callback function for the service server
      *        that returns the current count value
      *
      * @Param request None
      * @Param response Return the count value
      */
     void get_count_callback(const std::shared_ptr<GetCount::Request> request,
-                                  std::shared_ptr<GetCount::Response> response) {
-      (void) request; 
+                            std::shared_ptr<GetCount::Response> response) {
+      (void) request;
       response->count = count_;
     }
 
@@ -151,7 +156,8 @@ class MinimalPublisher : public rclcpp::Node {
 int main(int argc, char * argv[]) {
   rclcpp::init(argc, argv);
   RCLCPP_INFO_STREAM(rclcpp::get_logger("rclcpp"),
-       "The logger level will depends on the remainder of current count divided by 5.");
+       "The logger level will depends on the "
+       "remainder of current count divided by 5.");
 
   RCLCPP_INFO_STREAM(rclcpp::get_logger("rclcpp"),
               "\nThe logger level of each remainder value:"

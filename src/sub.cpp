@@ -7,7 +7,7 @@
 using std::placeholders::_1;
 
 /**
- * @Brief A subscriber node 
+ * @Brief A subscriber node
  */
 class MinimalSubscriber : public rclcpp::Node {
  public:
@@ -20,9 +20,11 @@ class MinimalSubscriber : public rclcpp::Node {
       if (rcutils_logging_set_logger_level(this->get_logger().get_name(),
                       RCUTILS_LOG_SEVERITY::RCUTILS_LOG_SEVERITY_DEBUG)
           == RCUTILS_RET_OK) {
-          RCLCPP_INFO_STREAM(this->get_logger(), "Set logger level DEBUG success.");
+          RCLCPP_INFO_STREAM(this->get_logger(),
+                             "Set logger level DEBUG success.");
       } else {
-          RCLCPP_ERROR_STREAM(this->get_logger(), "Set logger level DEBUG fails.");
+          RCLCPP_ERROR_STREAM(this->get_logger(),
+                              "Set logger level DEBUG fails.");
       }
 
       // Create a subscriber for count
@@ -32,7 +34,7 @@ class MinimalSubscriber : public rclcpp::Node {
 
  private:
     /**
-     * @Brief The callback function for the count subscriber 
+     * @Brief The callback function for the count subscriber
      *
      * @Param msg
      */
@@ -42,7 +44,7 @@ class MinimalSubscriber : public rclcpp::Node {
     }
 
     /**
-     * @Brief This function uses different logger level based on 
+     * @Brief This function uses different logger level based on
      *        the remainder of the count divided by 5.
      *        0) DEBUG
      *        1) INFO
@@ -55,7 +57,7 @@ class MinimalSubscriber : public rclcpp::Node {
 
     void logger(const std_msgs::msg::String& msg) const {
       int count = stoi(msg.data);
-      switch(count % 5) {
+      switch (count % 5) {
         case 0:
           RCLCPP_DEBUG_STREAM(this->get_logger(),
             "I heard count: " << msg.data);
@@ -84,7 +86,7 @@ class MinimalSubscriber : public rclcpp::Node {
     }
 
     /**
-     * @Brief Subscriber 
+     * @Brief Subscriber
      */
     rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscription_;
 };
@@ -92,7 +94,8 @@ class MinimalSubscriber : public rclcpp::Node {
 int main(int argc, char * argv[]) {
   rclcpp::init(argc, argv);
   RCLCPP_INFO_STREAM(rclcpp::get_logger("rclcpp"),
-       "The logger level will depends on the remainder of received count divided by 5.");
+       "The logger level will depends on the "
+       "remainder of received count divided by 5.");
 
   RCLCPP_INFO_STREAM(rclcpp::get_logger("rclcpp"),
               "\nThe logger level of each remainder value:"
