@@ -16,16 +16,46 @@ class MinimalPublisher : public rclcpp::Node {
     : Node("minimal_publisher"), count_(0) {
       publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
       timer_ = this->create_wall_timer(
-          500ms, std::bind(&MinimalPublisher::timer_callback, this));
+          1s, std::bind(&MinimalPublisher::timer_callback, this));
     }
  private:
     void timer_callback() {
       auto message = std_msgs::msg::String();
-      message.data = std::to_string(count_++);
-      RCLCPP_INFO(this->get_logger(),
-          "ENPM808X Publisher: '%s'", message.data.c_str());
+      message.data = std::to_string(count_);
+      this->logger(message);
       publisher_->publish(message);
+      count_++;
     }
+
+    void logger(std_msgs::msg::String& msg) {
+      switch(count_ % 5) {
+        case 0:
+          RCLCPP_DEBUG_STREAM(this->get_logger(),
+            "Count: " << msg.data);
+          break;
+        case 1:
+          RCLCPP_INFO_STREAM(this->get_logger(),
+            "Count: " << msg.data);
+          break;
+        case 2:
+          RCLCPP_WARN_STREAM(this->get_logger(),
+            "Count: " << msg.data);
+          break;
+        case 3:
+          RCLCPP_ERROR_STREAM(this->get_logger(),
+            "Count: " << msg.data);
+          break;
+        case 4:
+          RCLCPP_FATAL_STREAM(this->get_logger(),
+            "Count: " << msg.data);
+          break;
+        default:
+          break;
+      }
+
+      return;
+    }
+
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
     size_t count_;
@@ -33,6 +63,13 @@ class MinimalPublisher : public rclcpp::Node {
 
 int main(int argc, char * argv[]) {
   rclcpp::init(argc, argv);
+  RCLCPP_INFO_STREAM(rclcpp::get_logger("rclcpp"),
+       "The logger level will depends on the remainder of received count divided by 5.");
+
+  RCLCPP_INFO_STREAM(rclcpp::get_logger("rclcpp"),
+              "\nThe logger level of each remainder value: \
+              \n 0) Debug \n 1) INFO \n 2) WARN \n 3) ERROR \n 4) FATAL \n");
+
   rclcpp::spin(std::make_shared<MinimalPublisher>());
   rclcpp::shutdown();
   return 0;
