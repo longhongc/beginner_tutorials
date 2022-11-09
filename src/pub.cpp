@@ -14,6 +14,13 @@ class MinimalPublisher : public rclcpp::Node {
  public:
     MinimalPublisher()
     : Node("minimal_publisher"), count_(0) {
+      if (rcutils_logging_set_logger_level(this->get_logger().get_name(),
+                      RCUTILS_LOG_SEVERITY::RCUTILS_LOG_SEVERITY_DEBUG)
+          == RCUTILS_RET_OK) {
+          RCLCPP_INFO_STREAM(this->get_logger(), "Set logger level DEBUG success.");
+      } else {
+          RCLCPP_ERROR_STREAM(this->get_logger(), "Set logger level DEBUG fails.");
+      }
       publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
       timer_ = this->create_wall_timer(
           1s, std::bind(&MinimalPublisher::timer_callback, this));
@@ -64,7 +71,7 @@ class MinimalPublisher : public rclcpp::Node {
 int main(int argc, char * argv[]) {
   rclcpp::init(argc, argv);
   RCLCPP_INFO_STREAM(rclcpp::get_logger("rclcpp"),
-       "The logger level will depends on the remainder of received count divided by 5.");
+       "The logger level will depends on the remainder of current count divided by 5.");
 
   RCLCPP_INFO_STREAM(rclcpp::get_logger("rclcpp"),
               "\nThe logger level of each remainder value: \

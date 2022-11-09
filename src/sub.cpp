@@ -10,6 +10,13 @@ class MinimalSubscriber : public rclcpp::Node {
  public:
     MinimalSubscriber()
     : Node("minimal_subscriber") {
+      if (rcutils_logging_set_logger_level(this->get_logger().get_name(),
+                      RCUTILS_LOG_SEVERITY::RCUTILS_LOG_SEVERITY_DEBUG)
+          == RCUTILS_RET_OK) {
+          RCLCPP_INFO_STREAM(this->get_logger(), "Set logger level DEBUG success.");
+      } else {
+          RCLCPP_ERROR_STREAM(this->get_logger(), "Set logger level DEBUG fails.");
+      }
       subscription_ = this->create_subscription<std_msgs::msg::String>(
       "topic", 10, std::bind(&MinimalSubscriber::topic_callback, this, _1));
     }
