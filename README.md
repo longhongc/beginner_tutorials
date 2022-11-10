@@ -45,7 +45,7 @@ source {ros2_ws}/install/setup.bash
 
 ## Publisher and Subscriber
 ### Run
-Swith to the git tag `ros_pub_sub_Release`
+Switch to the git tag `ros_pub_sub_Release`
 ```
 git checkout ros_pub_sub_Release
 # build the code with the Build steps
@@ -60,7 +60,7 @@ ros2 run beginner_tutorials listener
 
 ## Services, launch file, and parameters
 ### Run
-Swith to the git tag `Week10_HW_Release`
+Switch to the git tag `Week10_HW_Release`
 ```
 git checkout Week10_HW_Release
 # build the code with the Build steps
@@ -79,7 +79,7 @@ ros2 param set /publisher_node count 100
 ros2 param get /publisher_node
 ```
 ### Result
-**launch_file_with_command_line_argument**    
+**launch file with command line argument**    
 <img width="627" alt="launch_file_with_command_line_argument" src="./results/launch_file_with_command_line_argument.png">  
 **Monitor through rqt_console**  
 <img width="627" alt="loggers_console" src="./results/loggers_console.png">  
