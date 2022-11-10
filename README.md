@@ -1,6 +1,14 @@
 # Beginner Tutorials for ROS2
 This repository contains following practices for ROS2
 - [**Publisher subscriber**](#publisher-and-subscriber)  
+- [**Services, launch file, and parameters**](#services-launch-file-and-parameters) 
+### Table of contents
+- [**Install**](#install)  
+- [**Docs**](#docs) 
+- [**Build**](#build) 
+- [**Publisher subscriber**](#publisher-and-subscriber)  
+- [**Services, launch file, and parameters**](#services-launch-file-and-parameters) 
+- [**Code Format Check**](#code-format-check) 
 
 ## Dependencies
 - ROS2 
@@ -16,22 +24,66 @@ cd {ros2_ws}/src
 git clone https://github.com/longhongc/beginner_tutorials.git
 ```
 
+## Docs
+Create doxygen docs with this command.
+The doxygen docs will be export to the docs folder
+```
+cd {ros2_ws}
+doxygen Doxyfile
+```
+
 ## Build
 Source your ros2 workspace  
 Setup.bash can be .zsh, depends on your shell
 ```
-source {ros2_ws}/install/setup.bash 
 cd {ros2_ws}
 colcon build
+source {ros2_ws}/install/setup.bash 
 ```
+
+
 
 ## Publisher and Subscriber
 ### Run
-
+Swith to the git tag `ros_pub_sub_Release`
+```
+git checkout ros_pub_sub_Release
+# build the code with the Build steps
+```
 Run publisher and listener on different terminals
 ```
 ros2 run beginner_tutorials talker
 ros2 run beginner_tutorials listener
 ```
 ### Result
-![simple_pub_sub](https://user-images.githubusercontent.com/28807825/200461430-fd63491a-4e3d-4c6a-a7dc-0f1cc3ca5a7b.png)
+![simple_pub_sub](./results/simple_pub_sub.png)
+
+## Services, launch file, and parameters
+### Run
+Swith to the git tag `Week10_HW_Release`
+```
+git checkout Week10_HW_Release
+# build the code with the Build steps
+```
+Run launch file 
+```
+ros2 launch beginner_tutorials pub_sub_launch.py count:=50
+```
+The count argument can be modified to different number.  
+If not provided, then the default count will start from 0.   
+
+The count value can also be controlled by command line.
+```
+ros2 param describe /publisher_node count
+ros2 param set /publisher_node count 100
+ros2 param get /publisher_node
+```
+### Result
+**launch_file_with_command_line_argument**    
+<img width="627" alt="launch_file_with_command_line_argument" src="./results/launch_file_with_command_line_argument.png">  
+**Monitor through rqt_console**  
+<img width="627" alt="loggers_console" src="./results/loggers_console.png">  
+
+## Code Format Check
+The code in this projects follows the guidline of cpplint and cppcheck.  
+The output of cpplint and cppcheck is in results/cpplint_and_cppcheck. 

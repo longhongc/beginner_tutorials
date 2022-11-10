@@ -13,18 +13,38 @@ find_package(ament_cmake REQUIRED)
 
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
 
+# Generate custom service interface
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "srv/GetCount.srv"
+)
+ament_export_dependencies(rosidl_default_runtime)
+
+# Add publisher executable
 add_executable(talker src/pub.cpp)
 ament_target_dependencies(talker rclcpp std_msgs)
 
+# Add subscriber executable
 add_executable(listener src/sub.cpp)
 ament_target_dependencies(listener rclcpp std_msgs)
 
+# For internal use of custom services or message 
+# in the same package
+rosidl_get_typesupport_target(cpp_typesupport_target
+  ${PROJECT_NAME} "rosidl_typesupport_cpp")
+target_link_libraries(talker "${cpp_typesupport_target}")
+
+# Install executable
 install(TARGETS 
   talker
   listener
   DESTINATION lib/${PROJECT_NAME})
 
+# Install launch file
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
