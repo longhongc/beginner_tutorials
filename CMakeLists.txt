@@ -22,12 +22,18 @@ find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/GetCount.srv"
 )
+
 ament_export_dependencies(rosidl_default_runtime)
 
-# Add publisher executable
-add_executable(talker src/pub.cpp)
+include_directories(
+    include
+)
+
+# publisher library
+add_library(pub_lib src/pub.cpp)
+
 ament_target_dependencies(
-  talker
+  pub_lib
   rclcpp 
   std_msgs
   geometry_msgs
@@ -35,15 +41,34 @@ ament_target_dependencies(
   tf2_geometry_msgs 
 )
 
-# Add subscriber executable
-add_executable(listener src/sub.cpp)
-ament_target_dependencies(listener rclcpp std_msgs)
-
 # For internal use of custom services or message 
 # in the same package
 rosidl_get_typesupport_target(cpp_typesupport_target
   ${PROJECT_NAME} "rosidl_typesupport_cpp")
-target_link_libraries(talker "${cpp_typesupport_target}")
+target_link_libraries(pub_lib
+  "${cpp_typesupport_target}"
+)
+
+# subscriber library
+add_library(sub_lib src/sub.cpp)
+
+ament_target_dependencies(
+  sub_lib
+  rclcpp 
+  std_msgs
+)
+
+# Add publisher executable
+add_executable(talker src/talker.cpp)
+target_link_libraries(talker
+  pub_lib
+)
+
+# Add subscriber executable
+add_executable(listener src/listener.cpp)
+target_link_libraries(listener
+  sub_lib
+)
 
 # Install executable
 install(TARGETS 
@@ -51,6 +76,29 @@ install(TARGETS
   listener
   DESTINATION lib/${PROJECT_NAME})
 
+install(
+  DIRECTORY include/beginner_tutorials
+  DESTINATION include)
+
+# Install shared library
+install(
+  TARGETS pub_lib
+  EXPORT pub_lib
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
+
+install(
+  TARGETS sub_lib
+  EXPORT sub_lib
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
+ 
 # Install launch file
 install(
   DIRECTORY launch
