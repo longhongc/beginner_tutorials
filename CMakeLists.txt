@@ -34,14 +34,14 @@ add_library(pub_lib src/pub.cpp)
 
 ament_target_dependencies(
   pub_lib
-  rclcpp 
+  rclcpp
   std_msgs
   geometry_msgs
   tf2_ros
-  tf2_geometry_msgs 
+  tf2_geometry_msgs
 )
 
-# For internal use of custom services or message 
+# For internal use of custom services or message
 # in the same package
 rosidl_get_typesupport_target(cpp_typesupport_target
   ${PROJECT_NAME} "rosidl_typesupport_cpp")
@@ -54,7 +54,7 @@ add_library(sub_lib src/sub.cpp)
 
 ament_target_dependencies(
   sub_lib
-  rclcpp 
+  rclcpp
   std_msgs
 )
 
@@ -71,14 +71,17 @@ target_link_libraries(listener
 )
 
 # Install executable
-install(TARGETS 
+install(
+  TARGETS
   talker
   listener
-  DESTINATION lib/${PROJECT_NAME})
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 install(
   DIRECTORY include/beginner_tutorials
-  DESTINATION include)
+  DESTINATION include
+)
 
 # Install shared library
 install(
@@ -98,11 +101,12 @@ install(
   RUNTIME DESTINATION bin
   INCLUDES DESTINATION include
 )
- 
+
 # Install launch file
 install(
   DIRECTORY launch
-  DESTINATION share/${PROJECT_NAME})
+  DESTINATION share/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -114,6 +118,24 @@ if(BUILD_TESTING)
   # a copyright and license is added to all source files
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
+
+  find_package(ament_cmake_gtest REQUIRED)
+
+  set(TESTFILES
+    test/main.cpp
+    test/test_pub.cpp
+  )
+
+  ament_add_gtest(${PROJECT_NAME}_test ${TESTFILES})
+  target_link_libraries(${PROJECT_NAME}_test
+    pub_lib
+  )
+
+  install(
+    TARGETS ${PROJECT_NAME}_test
+    DESTINATION lib/${PROJECT_NAME}
+  )
+
 endif()
 
 ament_package()

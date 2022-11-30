@@ -2,21 +2,26 @@
 #include "beginner_tutorials/pub.hpp"
 
 MinimalPublisher::MinimalPublisher()
-  : Node("minimal_publisher"), count_(0) {
+: Node("minimal_publisher"), count_(0)
+{
   // Set default logger level to DEBUG
-  if (rcutils_logging_set_logger_level(this->get_logger().get_name(),
-                  RCUTILS_LOG_SEVERITY::RCUTILS_LOG_SEVERITY_DEBUG)
-      == RCUTILS_RET_OK) {
-      RCLCPP_INFO_STREAM(this->get_logger(),
-                         "Set logger level DEBUG success.");
+  if (rcutils_logging_set_logger_level(
+      this->get_logger().get_name(),
+      RCUTILS_LOG_SEVERITY::RCUTILS_LOG_SEVERITY_DEBUG) ==
+    RCUTILS_RET_OK)
+  {
+    RCLCPP_INFO_STREAM(
+      this->get_logger(),
+      "Set logger level DEBUG success.");
   } else {
-      RCLCPP_ERROR_STREAM(this->get_logger(),
-                          "Set logger level DEBUG fails.");
+    RCLCPP_ERROR_STREAM(
+      this->get_logger(),
+      "Set logger level DEBUG fails.");
   }
 
   // Set ros parameter "count"
   auto param_desc =
-       rcl_interfaces::msg::ParameterDescriptor{};
+    rcl_interfaces::msg::ParameterDescriptor{};
 
   param_desc.description =
     "\nThis parameter is the count value passed between "
@@ -32,28 +37,29 @@ MinimalPublisher::MinimalPublisher()
   // Create a publisher for count
   publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
   timer_ = this->create_wall_timer(
-      1s, std::bind(&MinimalPublisher::timer_callback, this));
+    1s, std::bind(&MinimalPublisher::timer_callback, this));
 
   // Create a service for modifying count
   std::string get_count_service_name =
-              "/" + std::string(this->get_name()) + "/" + "GetCount";
+    "/" + std::string(this->get_name()) + "/" + "GetCount";
   get_count_service_ = this->create_service<GetCount>(
-      get_count_service_name,
-      std::bind(&MinimalPublisher::get_count_callback, this, _1, _2));
+    get_count_service_name,
+    std::bind(&MinimalPublisher::get_count_callback, this, _1, _2));
 
   // Create tf broadcaster
   tf_broadcaster_ = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
 
   // Timer constantly publishing tf info
   tf_timer_ = this->create_wall_timer(
-      200ms, std::bind(&MinimalPublisher::broadcast_timer_callback, this));
+    200ms, std::bind(&MinimalPublisher::broadcast_timer_callback, this));
 }
 
 /**
  * @Brief The callback function that will be called and publish message
  *        for a given frequency
  */
-void MinimalPublisher::timer_callback() {
+void MinimalPublisher::timer_callback()
+{
   auto message = std_msgs::msg::String();
   // Receive the count parameter
   count_ = this->get_parameter("count").get_parameter_value().get<int>();
@@ -80,34 +86,38 @@ void MinimalPublisher::timer_callback() {
 *
 * @Param msg The count message in string
 */
-void MinimalPublisher::logger(const std_msgs::msg::String& msg) {
+void MinimalPublisher::logger(const std_msgs::msg::String & msg)
+{
   int count = stoi(msg.data);
   switch (count % 5) {
     case 0:
-      RCLCPP_DEBUG_STREAM(this->get_logger(),
+      RCLCPP_DEBUG_STREAM(
+        this->get_logger(),
         "Count: " << msg.data);
       break;
     case 1:
-      RCLCPP_INFO_STREAM(this->get_logger(),
+      RCLCPP_INFO_STREAM(
+        this->get_logger(),
         "Count: " << msg.data);
       break;
     case 2:
-      RCLCPP_WARN_STREAM(this->get_logger(),
+      RCLCPP_WARN_STREAM(
+        this->get_logger(),
         "Count: " << msg.data);
       break;
     case 3:
-      RCLCPP_ERROR_STREAM(this->get_logger(),
+      RCLCPP_ERROR_STREAM(
+        this->get_logger(),
         "Count: " << msg.data);
       break;
     case 4:
-      RCLCPP_FATAL_STREAM(this->get_logger(),
+      RCLCPP_FATAL_STREAM(
+        this->get_logger(),
         "Count: " << msg.data);
       break;
     default:
       break;
   }
-
-  return;
 }
 
 /**
@@ -117,8 +127,11 @@ void MinimalPublisher::logger(const std_msgs::msg::String& msg) {
  * @Param request None
  * @Param response Return the count value
  */
-void MinimalPublisher::get_count_callback(const std::shared_ptr<GetCount::Request> request,
-                                          std::shared_ptr<GetCount::Response> response) {
+void MinimalPublisher::get_count_callback(
+  const std::shared_ptr<GetCount::Request> request,
+  std::shared_ptr<GetCount::Response> response)
+{
+
   (void) request;
   response->count = count_;
 }
@@ -126,7 +139,8 @@ void MinimalPublisher::get_count_callback(const std::shared_ptr<GetCount::Reques
 /**
  * @Brief  The callback function for the tf broadcaster timer
 */
-void MinimalPublisher::broadcast_timer_callback() {
+void MinimalPublisher::broadcast_timer_callback()
+{
   tf2::Quaternion tf2_quat;
   tf2_quat.setRPY(0, 0, 1.57);
 
