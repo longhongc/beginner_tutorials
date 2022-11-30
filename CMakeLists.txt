@@ -131,6 +131,14 @@ if(BUILD_TESTING)
     pub_lib
   )
 
+  ament_target_dependencies(
+    ${PROJECT_NAME}_test
+    geometry_msgs
+    tf2
+    tf2_ros
+    tf2_geometry_msgs
+  )
+
   install(
     TARGETS ${PROJECT_NAME}_test
     DESTINATION lib/${PROJECT_NAME}

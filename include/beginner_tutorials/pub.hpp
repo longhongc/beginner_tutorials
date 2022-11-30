@@ -31,6 +31,11 @@ public:
    */
   MinimalPublisher();
 
+  /**
+   * @Brief  Transform between world and talk frame
+   */
+  geometry_msgs::msg::Transform world_to_talk_tf;
+
 private:
   /**
    * @Brief The callback function that will be called and publish message

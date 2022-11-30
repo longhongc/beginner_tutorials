@@ -52,6 +52,15 @@ MinimalPublisher::MinimalPublisher()
   // Timer constantly publishing tf info
   tf_timer_ = this->create_wall_timer(
     200ms, std::bind(&MinimalPublisher::broadcast_timer_callback, this));
+
+  // Init transform between world and talk
+  tf2::Quaternion tf2_quat;
+  tf2_quat.setRPY(0, 0, 1.57);
+
+  world_to_talk_tf.translation.x = 1.0;
+  world_to_talk_tf.translation.y = 2.0;
+  world_to_talk_tf.translation.z = 3.0;
+  world_to_talk_tf.rotation = tf2::toMsg(tf2_quat);
 }
 
 /**
@@ -141,16 +150,13 @@ void MinimalPublisher::get_count_callback(
 */
 void MinimalPublisher::broadcast_timer_callback()
 {
-  tf2::Quaternion tf2_quat;
-  tf2_quat.setRPY(0, 0, 1.57);
 
   geometry_msgs::msg::TransformStamped t;
 
   t.header.stamp = this->get_clock()->now();
   t.header.frame_id = "world";
   t.child_frame_id = "talk";
-  t.transform.translation.x = 1.0;
-  t.transform.translation.y = 2.0;
-  t.transform.translation.z = 3.0;
-  t.transform.rotation = tf2::toMsg(tf2_quat);
+  t.transform = world_to_talk_tf;
+
+  tf_broadcaster_->sendTransform(t);
 }
