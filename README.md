@@ -42,7 +42,7 @@ Source your ros2 workspace
 Setup.bash can be .zsh, depends on your shell
 ```
 cd {ros2_ws}
-colcon build
+colcon build --packages-select beginner_tutorials
 source {ros2_ws}/install/setup.bash 
 ```
 
