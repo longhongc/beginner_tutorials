@@ -123,6 +123,9 @@ Run the testing command
 colcon test --event-handlers console_direct+ --packages-select beginner_tutorials
 ```
 ### Result
+The test include default ROS2 code style check and a custom gtest for testing tf broadcast by talker.   
+The full test result is in results/test_result.txt  
+![test_result](./results/test_result.png)
 
 ## Rosbag
 ### Run
