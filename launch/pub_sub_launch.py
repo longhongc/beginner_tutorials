@@ -1,15 +1,14 @@
-import os
 from launch import LaunchDescription
-from launch.substitutions import LaunchConfiguration
 from launch.actions import ExecuteProcess
 from launch.conditions import IfCondition, UnlessCondition
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 
 def generate_launch_description():
 
     count_arg = LaunchConfiguration('count', default='50')
-    record = LaunchConfiguration('record', default="false")
+    record = LaunchConfiguration('record', default='false')
 
     return LaunchDescription([
         ExecuteProcess(

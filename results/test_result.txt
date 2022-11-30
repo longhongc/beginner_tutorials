@@ -1,0 +1,157 @@
+Starting >>> beginner_tutorials
+UpdateCTestConfiguration  from :/home/longhongc/ros2_humble_practice/build/beginner_tutorials/CTestConfiguration.ini
+Parse Config file:/home/longhongc/ros2_humble_practice/build/beginner_tutorials/CTestConfiguration.ini
+   Site: LAPTOP-1NQVSMVK
+   Build name: (empty)
+ Add coverage exclude regular expressions.
+SetCTestConfiguration:CMakeCommand:/usr/bin/cmake
+Create new tag: 20221130-1819 - Experimental
+UpdateCTestConfiguration  from :/home/longhongc/ros2_humble_practice/build/beginner_tutorials/CTestConfiguration.ini
+Parse Config file:/home/longhongc/ros2_humble_practice/build/beginner_tutorials/CTestConfiguration.ini
+Test project /home/longhongc/ros2_humble_practice/build/beginner_tutorials
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: beginner_tutorials_test
+
+1: Test command: /usr/bin/python3.8 "-u" "/home/longhongc/ros2_humble/install/ament_cmake_test/share/ament_cmake_test/cmake/run_test.py" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/beginner_tutorials_test.gtest.xml" "--package-name" "beginner_tutorials" "--output-file" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/ament_cmake_gtest/beginner_tutorials_test.txt" "--command" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/beginner_tutorials_test" "--gtest_output=xml:/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/beginner_tutorials_test.gtest.xml"
+1: Test timeout computed to be: 60
+1: -- run_test.py: invoking following command in '/home/longhongc/ros2_humble_practice/build/beginner_tutorials':
+1:  - /home/longhongc/ros2_humble_practice/build/beginner_tutorials/beginner_tutorials_test --gtest_output=xml:/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/beginner_tutorials_test.gtest.xml
+1: [==========] Running 2 tests from 2 test suites.
+1: [----------] Global test environment set-up.
+1: [----------] 1 test from DummyTests
+1: [ RUN      ] DummyTests.Dummy1
+1: [       OK ] DummyTests.Dummy1 (0 ms)
+1: [----------] 1 test from DummyTests (0 ms total)
+1: 
+1: [----------] 1 test from TestPub
+1: [ RUN      ] TestPub.TestTF
+1: [INFO] [1669832384.409496020] [minimal_publisher]: Set logger level DEBUG success.
+1: [INFO] [1669832384.409680272] [minimal_publisher]: Count starts from 0
+1: [DEBUG] [1669832385.410620752] [minimal_publisher]: Count: 0
+1: [INFO] [1669832386.410691034] [minimal_publisher]: Count: 1
+1: [WARN] [1669832387.410587315] [minimal_publisher]: Count: 2
+1: [       OK ] TestPub.TestTF (3031 ms)
+1: [----------] 1 test from TestPub (3031 ms total)
+1: 
+1: [----------] Global test environment tear-down
+1: [==========] 2 tests from 2 test suites ran. (3031 ms total)
+1: [  PASSED  ] 2 tests.
+1: -- run_test.py: return code 0
+1: -- run_test.py: inject classname prefix into gtest result file '/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/beginner_tutorials_test.gtest.xml'
+1: -- run_test.py: verify result file '/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/beginner_tutorials_test.gtest.xml'
+1/7 Test #1: beginner_tutorials_test ..........   Passed    3.31 sec
+test 2
+    Start 2: cppcheck
+
+2: Test command: /usr/bin/python3.8 "-u" "/home/longhongc/ros2_humble/install/ament_cmake_test/share/ament_cmake_test/cmake/run_test.py" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/cppcheck.xunit.xml" "--package-name" "beginner_tutorials" "--output-file" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/ament_cppcheck/cppcheck.txt" "--command" "/home/longhongc/ros2_humble/install/ament_cppcheck/bin/ament_cppcheck" "--xunit-file" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/cppcheck.xunit.xml" "--include_dirs" "/home/longhongc/ros2_humble_practice/src/beginner_tutorials/include"
+2: Test timeout computed to be: 300
+2: -- run_test.py: invoking following command in '/home/longhongc/ros2_humble_practice/src/beginner_tutorials':
+2:  - /home/longhongc/ros2_humble/install/ament_cppcheck/bin/ament_cppcheck --xunit-file /home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/cppcheck.xunit.xml --include_dirs /home/longhongc/ros2_humble_practice/src/beginner_tutorials/include
+2: No problems found
+2: -- run_test.py: return code 0
+2: -- run_test.py: verify result file '/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/cppcheck.xunit.xml'
+2/7 Test #2: cppcheck .........................   Passed    0.51 sec
+test 3
+    Start 3: flake8
+
+3: Test command: /usr/bin/python3.8 "-u" "/home/longhongc/ros2_humble/install/ament_cmake_test/share/ament_cmake_test/cmake/run_test.py" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/flake8.xunit.xml" "--package-name" "beginner_tutorials" "--output-file" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/ament_flake8/flake8.txt" "--command" "/home/longhongc/ros2_humble/install/ament_flake8/bin/ament_flake8" "--xunit-file" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/flake8.xunit.xml"
+3: Test timeout computed to be: 60
+3: -- run_test.py: invoking following command in '/home/longhongc/ros2_humble_practice/src/beginner_tutorials':
+3:  - /home/longhongc/ros2_humble/install/ament_flake8/bin/ament_flake8 --xunit-file /home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/flake8.xunit.xml
+3: 
+3: 1 files checked
+3: No problems found
+3: 
+3: Checked files:
+3: 
+3: * ./launch/pub_sub_launch.py
+3: -- run_test.py: return code 0
+3: -- run_test.py: verify result file '/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/flake8.xunit.xml'
+3/7 Test #3: flake8 ...........................   Passed    0.66 sec
+test 4
+    Start 4: lint_cmake
+
+4: Test command: /usr/bin/python3.8 "-u" "/home/longhongc/ros2_humble/install/ament_cmake_test/share/ament_cmake_test/cmake/run_test.py" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/lint_cmake.xunit.xml" "--package-name" "beginner_tutorials" "--output-file" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/ament_lint_cmake/lint_cmake.txt" "--command" "/home/longhongc/ros2_humble/install/ament_lint_cmake/bin/ament_lint_cmake" "--xunit-file" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/lint_cmake.xunit.xml"
+4: Test timeout computed to be: 60
+4: -- run_test.py: invoking following command in '/home/longhongc/ros2_humble_practice/src/beginner_tutorials':
+4:  - /home/longhongc/ros2_humble/install/ament_lint_cmake/bin/ament_lint_cmake --xunit-file /home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/lint_cmake.xunit.xml
+4: 
+4: No problems found
+4: -- run_test.py: return code 0
+4: -- run_test.py: verify result file '/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/lint_cmake.xunit.xml'
+4/7 Test #4: lint_cmake .......................   Passed    0.47 sec
+test 5
+    Start 5: pep257
+
+5: Test command: /usr/bin/python3.8 "-u" "/home/longhongc/ros2_humble/install/ament_cmake_test/share/ament_cmake_test/cmake/run_test.py" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/pep257.xunit.xml" "--package-name" "beginner_tutorials" "--output-file" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/ament_pep257/pep257.txt" "--command" "/home/longhongc/ros2_humble/install/ament_pep257/bin/ament_pep257" "--xunit-file" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/pep257.xunit.xml"
+5: Test timeout computed to be: 60
+5: -- run_test.py: invoking following command in '/home/longhongc/ros2_humble_practice/src/beginner_tutorials':
+5:  - /home/longhongc/ros2_humble/install/ament_pep257/bin/ament_pep257 --xunit-file /home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/pep257.xunit.xml
+5: checking ./launch/pub_sub_launch.py
+5: No problems found
+5: -- run_test.py: return code 0
+5: -- run_test.py: verify result file '/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/pep257.xunit.xml'
+5/7 Test #5: pep257 ...........................   Passed    0.51 sec
+test 6
+    Start 6: uncrustify
+
+6: Test command: /usr/bin/python3.8 "-u" "/home/longhongc/ros2_humble/install/ament_cmake_test/share/ament_cmake_test/cmake/run_test.py" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/uncrustify.xunit.xml" "--package-name" "beginner_tutorials" "--output-file" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/ament_uncrustify/uncrustify.txt" "--command" "/home/longhongc/ros2_humble/install/ament_uncrustify/bin/ament_uncrustify" "--xunit-file" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/uncrustify.xunit.xml"
+6: Test timeout computed to be: 60
+6: -- run_test.py: invoking following command in '/home/longhongc/ros2_humble_practice/src/beginner_tutorials':
+6:  - /home/longhongc/ros2_humble/install/ament_uncrustify/bin/ament_uncrustify --xunit-file /home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/uncrustify.xunit.xml
+6: No code style divergence in file 'include/beginner_tutorials/pub.hpp'
+6: 
+6: No code style divergence in file 'include/beginner_tutorials/sub.hpp'
+6: 
+6: No code style divergence in file 'src/listener.cpp'
+6: 
+6: No code style divergence in file 'src/pub.cpp'
+6: 
+6: No code style divergence in file 'src/sub.cpp'
+6: 
+6: No code style divergence in file 'src/talker.cpp'
+6: 
+6: No code style divergence in file 'test/main.cpp'
+6: 
+6: No code style divergence in file 'test/test_pub.cpp'
+6: 
+6: No problems found
+6: -- run_test.py: return code 0
+6: -- run_test.py: verify result file '/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/uncrustify.xunit.xml'
+6/7 Test #6: uncrustify .......................   Passed    0.52 sec
+test 7
+    Start 7: xmllint
+
+7: Test command: /usr/bin/python3.8 "-u" "/home/longhongc/ros2_humble/install/ament_cmake_test/share/ament_cmake_test/cmake/run_test.py" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/xmllint.xunit.xml" "--package-name" "beginner_tutorials" "--output-file" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/ament_xmllint/xmllint.txt" "--command" "/home/longhongc/ros2_humble/install/ament_xmllint/bin/ament_xmllint" "--xunit-file" "/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/xmllint.xunit.xml"
+7: Test timeout computed to be: 60
+7: -- run_test.py: invoking following command in '/home/longhongc/ros2_humble_practice/src/beginner_tutorials':
+7:  - /home/longhongc/ros2_humble/install/ament_xmllint/bin/ament_xmllint --xunit-file /home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/xmllint.xunit.xml
+7: File 'package.xml' is valid
+7: 
+7: No problems found
+7: -- run_test.py: return code 0
+7: -- run_test.py: verify result file '/home/longhongc/ros2_humble_practice/build/beginner_tutorials/test_results/beginner_tutorials/xmllint.xunit.xml'
+7/7 Test #7: xmllint ..........................   Passed    0.58 sec
+
+100% tests passed, 0 tests failed out of 7
+
+Label Time Summary:
+cppcheck      =   0.51 sec*proc (1 test)
+flake8        =   0.66 sec*proc (1 test)
+gtest         =   3.31 sec*proc (1 test)
+lint_cmake    =   0.47 sec*proc (1 test)
+linter        =   3.25 sec*proc (6 tests)
+pep257        =   0.51 sec*proc (1 test)
+uncrustify    =   0.52 sec*proc (1 test)
+xmllint       =   0.58 sec*proc (1 test)
+
+Total Test time (real) =   6.56 sec
+Finished <<< beginner_tutorials [6.69s]
+
+Summary: 1 package finished [6.84s]
