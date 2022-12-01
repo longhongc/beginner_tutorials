@@ -122,6 +122,11 @@ Run the testing command
 ```
 colcon test --event-handlers console_direct+ --packages-select beginner_tutorials
 ```
+The gtest can be run solely with ros2 launch or run.
+```
+ros2 run beginner_tutorials beginner_tutorials_test
+ros2 launch beginner_tutorials test_launch.py
+```
 ### Result
 The test include default ROS2 code style check and a custom gtest for testing tf broadcast by talker.   
 The full test result is in results/test_result.txt  
@@ -148,5 +153,6 @@ ros2 bag play rosbag2*
 
 
 ## Code Format Check
-The code in this projects follows the guidline of cpplint and cppcheck.  
-The output of cpplint and cppcheck is in results/cpplint_and_cppcheck. 
+The default coding style test in ros2 uses [uncrustify](https://github.com/uncrustify/uncrustify).    
+Some of the suggestion from uncrustify contradicts with cpplint.   
+In order to pass all tests, this project will from now on adopts the style of ros2 which follows the guidence of uncrustify.    
