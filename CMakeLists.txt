@@ -79,8 +79,13 @@ install(
 )
 
 install(
-  DIRECTORY include/beginner_tutorials
+  DIRECTORY include/${PROJECT_NAME}
   DESTINATION include
+)
+
+install(
+  DIRECTORY results/rosbag
+  DESTINATION share/${PROJECT_NAME}
 )
 
 # Install shared library

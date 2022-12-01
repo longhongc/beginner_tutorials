@@ -12,7 +12,7 @@
 
 using namespace std::chrono_literals;
 
-TEST(DummyTests, Dummy1) {
+TEST(DummyTests, dummy1) {
   EXPECT_TRUE(true);
 }
 
@@ -46,7 +46,7 @@ protected:
   std::unique_ptr<std::thread> pub_thread_;
 };
 
-TEST_F(TestPub, TestTF) {
+TEST_F(TestPub, testTF) {
   // Wait for publisher 3 seconds
   auto start = clock_->now();
   double duration_sec = 0;
